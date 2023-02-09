@@ -14,7 +14,7 @@
     <div class="container">
         <h2>Thêm mới Post</h2>
         <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+            {{ csrf_field() }}
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" class="form-control" id="name" name="name">

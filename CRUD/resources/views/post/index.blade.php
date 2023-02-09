@@ -56,7 +56,7 @@
             {{-- </div> --}}
         </table>
         <div class="container">
-            {{ $allPosts->links() }}
+            {{-- {{ $post->links() }} --}}
         </div>
 
     </div>
