@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use App\Models\File;
 use App\Models\Post;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\File\File;
+use App\Models\User;
 use App\Services\Post\PostService;
+use FilesystemIterator;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    // protected $postService;
-    // public function __construct(PostService $postService)
+    // public function __construct()
     // {
-    //     $this->postService = $postService;
+    //     $this->middleware('auth', ['except' => ['index']]);
     // }
     /**
      * Display a listing of the resource.
@@ -21,9 +23,11 @@ class PostController extends Controller
      */
     public function index()
     {
+        $postImage = FIle::all();
         $post = Post::all()->sortByDesc("id");
         return view('post.index')
-            ->with(compact('post'));
+            ->with(compact('post'))
+            ->with(compact('postImage'));
     }
 
     /**
@@ -42,17 +46,21 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, PostService $postService)
+    public function store(Request $request)
     {
-        $image = $postService->storeUploadFile($request);
+        $postService = new PostService();
+        // Tách phần upload file sang một service khác
+        $fieldImage = $postService->storeUploadFile($request->file('field_image'));
         $data = [
             'name' => $request->name,
             'description' => $request->description,
-            'image' => $image
+            'user_id' => auth()->user()->id,
+            'field_image' => $fieldImage
         ];
         // dd($data);
-        Post::create($data);
-        return redirect('posts/')->with('notification', 'Thêm mới thành công');
+        $post = Post::create($data);
+        // dd($post);
+        return redirect('/blog')->with('notification', 'Thêm mới thành công');
     }
 
     /**
@@ -63,7 +71,6 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -74,8 +81,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+        // $user = Auth::user();
         $post = Post::find($id);
-        return view('post.edit')->with(compact('post'));
+        return view('post.edit')
+            ->with(compact('post'));
     }
 
     /**
@@ -85,35 +94,44 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post, PostService $postService)
+    public function update(Request $request, $id)
     {
-        $image = $postService->updateUploadFile($request, $post);
-        // Lấy ra name và description
+        $post = Post::findOrFail($id);
+        // New PostService
+        $postService = new PostService();
+        $image = $postService->updateUploadFile($request->file('field_image'));
         $data = [
             'name' => $request->name,
             'description' => $request->description,
-            'image' => $image
+            'user_id' => auth()->user()->id,
+            'field_image' => $image
         ];
-        
-        // dd($data);
-        $post->update($data);
+        // Khi update sẽ xóa pathFile cũ của bảng Image
+        if ($image) {
+            $post->image()->delete();
+        }
+        // Cập nhật mới
+        $param = $post->update($data);
+        // dd($param);
 
-        return redirect('posts/')->with('notification', 'Sửa mới thành công');
+        return redirect('/blog')->with('notification', 'Sửa mới thành công');
     }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        // hàm xóa
-        $post->delete();
-        // Nếu xóa thì sẽ xóa luôn ảnh lưu trong foler
-        \File::delete('images/' . $post->image);
+        $posts = Post::find($id);
+        if ($posts) {
+            $posts->image()->delete();
+            $posts->delete();
+        }
+
+        \File::delete('images/' . $posts->image);
         // quay trở lại trang chủ
-        return redirect('posts/')->with('notification', 'Xóa thành công');
+        return redirect('/blog')->with('notification', 'Xóa thành công');
     }
 }

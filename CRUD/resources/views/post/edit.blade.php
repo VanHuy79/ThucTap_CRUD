@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <h2>Sửa mới Post</h2>
-        <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="/blog/{{ $post->id }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -28,8 +28,18 @@
 
             <div class="form-group">
                 <label for="pwd">Image:</label>
-                <input type="file" class="form-control" id="image" name="image">
-                <img src="/images/{{ $post->image }}" width="200" height="200">
+                {{-- @if (count($post->image) > 0) --}}
+                {{-- @foreach ($post->image as $img) --}}
+                {{-- <form action="/deleteimage/{{ $img->id }}" method="post"> --}}
+                {{-- <button class="btn text-danger">X</button> --}}
+                {{-- @csrf --}}
+                {{-- @method('DELETE') --}}
+                {{-- </form> --}}
+                <img src="/images/{{ $post->field_image }}" class="img-responsive"
+                    style="max-height: 75px; max-width: 75px;" alt="" srcset="">
+                {{-- @endforeach --}}
+                {{-- @endif --}}
+                <input type="file" class="form-control" id="field_image" name="field_image" multiple>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>

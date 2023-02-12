@@ -2,9 +2,10 @@
 
 namespace App\Services\Post;
 
-use File;
+use App\Models\File;
 use App\Models\Post;
 use Illuminate\Http\Request;
+// use Faker\Provider\File;
 
 /**
  * Class PostService
@@ -13,31 +14,32 @@ use Illuminate\Http\Request;
 class PostService
 {
    // Thêm mới uploadFile
-   public function storeUploadFile(Request $request)
+   public function storeUploadFile($files)
    {
-      if ($image = $request->file('image')) {
-         $destinationPath = 'images/';
-         $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-         $image->move($destinationPath, $profileImage);
-         // lấy ra thêm image
-         $data['image'] = $profileImage;
-         return $profileImage;
-      }
+      $fileName = $files->getClientOriginalName();
+      $files->move(public_path('images/'), $fileName);
+      $data['field_image'] = $fileName;
+      File::create([
+         'image' => $fileName,
+         'user_id' => auth()->user()->id
+      ]);
+      return $fileName;
    }
    // Cập nhật mới uploadFile
-   public function updateUploadFile(Request $request, Post $post)
+   public function updateUploadFile($files)
    {
-      if ($image = $request->file('image')) {
-         $destinationPath = 'images/';
-         $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-         $image->move($destinationPath, $profileImage);
+      if ($files) {
+         $fileName = $files->getClientOriginalName();
+         $files->move(public_path('images/'), $fileName);
          // lấy ra thêm image
-         $data['image'] = $profileImage;
-         // Sẽ xóa ảnh cũ đi
-         File::delete('images/' . $post->image);
+         $data['field_image'] =  $fileName;
+         File::updateOrCreate([
+            'image' =>  $fileName,
+            'user_id' => auth()->user()->id,
+         ]);
       } else {
-         unset($profileImage);
+         unset($fileName);
       }
-      return $profileImage;
+      return  $fileName;
    }
 }

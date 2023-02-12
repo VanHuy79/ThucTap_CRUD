@@ -20,14 +20,17 @@
             </div>
         @endif
         <table class="table">
-            <a href="{{ route('posts.create') }}" class="btn btn-primary">Thêm mới</a>
+            {{-- @if (Auth::check()) --}}
+            <a href="/blog/create" class="btn btn-primary">Thêm mới</a>
+            {{-- @endif --}}
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Image</th>
+                    <th style="width: 200px, display:flex">Image</th>
                     <th>Description</th>
-                    <th>Action</th>
+                    <th>Name Created</th>
+                    <th style="width: 75px">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,29 +39,31 @@
                         <td>{{ $posts->id }}</td>
                         <td>{{ $posts->name }}</td>
                         <td>
-                            <img src="/images/{{ $posts->image }}" alt="" height="100" width="100">
+                            <img src="/images/{{ $posts->field_image }}" class="img-responsive"
+                                style="max-height: 50px; max-width: 50px;" alt="" srcset="">
+                            {{-- @endforeach --}}
+                            {{-- @endif --}}
                         </td>
                         <td>{!! $posts->description !!}</td>
-                        <td>
-                            <a href="{{ route('posts.edit', $posts->id) }}" class="btn btn-success">Sửa</a>
-                            <form action="{{ route('posts.destroy', $posts->id) }}" method="POST">
+                        <td>{{ $posts->user->name }}</td>
+                        <td style="display: flex">
+                            {{-- @if (isset(Auth::user()->id) && Auth::user()->id == $posts->user_id) --}}
+                            <a href="/blog/{{ $posts->id }}/edit" class="btn btn-success">Sửa</a>
+                            {{-- @endif --}}
+                            {{-- @if (isset(Auth::user()->id) && Auth::user()->id == $posts->user_id) --}}
+                            <form action="/blog/{{ $posts->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Bạn có muốn xóa ?')"
                                     class="btn btn-danger">Xóa</button>
                             </form>
+                            {{-- @endif --}}
+
                         </td>
                     </tr>
                 @endforeach
-
             </tbody>
-            {{-- <div class="card-footer clearfix"> --}}
-            {{-- </div> --}}
         </table>
-        <div class="container">
-            {{-- {{ $post->links() }} --}}
-        </div>
-
     </div>
 
 </body>

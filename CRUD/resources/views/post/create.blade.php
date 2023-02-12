@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <h2>Thêm mới Post</h2>
-        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="/blog" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -25,7 +25,9 @@
             </div>
             <div class="form-group">
                 <label for="pwd">Image:</label>
-                <input type="file" class="form-control" id="image" name="image">
+                <input type="file" class="form-control" id="field_image" name="field_image" 
+                    accept="images/*">
+                {{-- <input type="hidden"  id="field_image" name="field_name"> --}}
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
