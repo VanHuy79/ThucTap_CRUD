@@ -23,10 +23,14 @@
                 <label for="pwd">Description:</label>
                 <textarea class="form-control" id="description" name="description"></textarea>
             </div>
+            @if (session('error'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="form-group">
                 <label for="pwd">Image:</label>
-                <input type="file" class="form-control" id="field_image" name="field_image" 
-                    accept="images/*">
+                <input type="file" class="form-control" id="field_image" name="field_image" accept="images/*">
                 {{-- <input type="hidden"  id="field_image" name="field_name"> --}}
             </div>
             <button type="submit" class="btn btn-default">Submit</button>

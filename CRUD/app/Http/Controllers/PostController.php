@@ -23,11 +23,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $postImage = FIle::all();
         $post = Post::all()->sortByDesc("id");
-        return view('post.index')
-            ->with(compact('post'))
-            ->with(compact('postImage'));
+        return view('post.index')->with(compact('post'));
     }
 
     /**
@@ -48,18 +45,26 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $postService = new PostService();
-        // Tách phần upload file sang một service khác
-        $fieldImage = $postService->storeUploadFile($request->file('field_image'));
+        // checkFile
+        $fileCheck = $request->hasFile('field_image');
+
         $data = [
             'name' => $request->name,
             'description' => $request->description,
             'user_id' => auth()->user()->id,
-            'field_image' => $fieldImage
         ];
-        // dd($data);
-        $post = Post::create($data);
-        // dd($post);
+
+        if ($fileCheck) {
+            $file = $request->file('field_image');
+            $postService = new PostService();
+            $fieldImage = $postService->uploadFile($file);
+            $data['field_image'] = $fieldImage;
+        } else {
+            return redirect('/blog/create')->with('error', "Vui lòng chọn File");
+        }
+
+        Post::create($data);
+
         return redirect('/blog')->with('notification', 'Thêm mới thành công');
     }
 
@@ -81,7 +86,6 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        // $user = Auth::user();
         $post = Post::find($id);
         return view('post.edit')
             ->with(compact('post'));
@@ -97,22 +101,25 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        // New PostService
-        $postService = new PostService();
-        $image = $postService->updateUploadFile($request->file('field_image'));
+        // Kiểm tra file
+        $fileCheck = $request->hasFile('field_image');
+
         $data = [
             'name' => $request->name,
             'description' => $request->description,
             'user_id' => auth()->user()->id,
-            'field_image' => $image
         ];
-        // Khi update sẽ xóa pathFile cũ của bảng Image
-        if ($image) {
+
+        if ($fileCheck) {
+            $file = $request->file('field_image');
+            $postService = new PostService();
+            $fieldImage = $postService->uploadFile($file);
+            $data['field_image'] = $fieldImage;
+            // Xóa image cũ của bảng Image
             $post->image()->delete();
         }
-        // Cập nhật mới
-        $param = $post->update($data);
-        // dd($param);
+
+        $post->update($data);
 
         return redirect('/blog')->with('notification', 'Sửa mới thành công');
     }
@@ -125,13 +132,15 @@ class PostController extends Controller
     public function destroy($id)
     {
         $posts = Post::find($id);
-        if ($posts) {
-            $posts->image()->delete();
-            $posts->delete();
+        if (!$posts) {
+            return redirect()->back()->with('error', 'Không tìm thấy Post để xóa');
         }
+        $image = File::where('image', $posts->field_image)->first();
+        $image->delete();
 
+        $posts->delete();
         \File::delete('images/' . $posts->image);
-        // quay trở lại trang chủ
+
         return redirect('/blog')->with('notification', 'Xóa thành công');
     }
 }

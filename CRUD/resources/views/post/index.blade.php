@@ -14,15 +14,15 @@
 
     <div class="container">
         <h2>Table Post</h2>
-        @if (session('notification'))
+        @if (session('notification') && session('error'))
             <div class="alert alert-success" role="alert">
                 {{ session('notification') }}
+                {{ session('error') }}
             </div>
         @endif
         <table class="table">
-            {{-- @if (Auth::check()) --}}
             <a href="/blog/create" class="btn btn-primary">Thêm mới</a>
-            {{-- @endif --}}
+
             <thead>
                 <tr>
                     <th>ID</th>
@@ -41,23 +41,19 @@
                         <td>
                             <img src="/images/{{ $posts->field_image }}" class="img-responsive"
                                 style="max-height: 50px; max-width: 50px;" alt="" srcset="">
-                            {{-- @endforeach --}}
-                            {{-- @endif --}}
                         </td>
                         <td>{!! $posts->description !!}</td>
                         <td>{{ $posts->user->name }}</td>
                         <td style="display: flex">
-                            {{-- @if (isset(Auth::user()->id) && Auth::user()->id == $posts->user_id) --}}
+
                             <a href="/blog/{{ $posts->id }}/edit" class="btn btn-success">Sửa</a>
-                            {{-- @endif --}}
-                            {{-- @if (isset(Auth::user()->id) && Auth::user()->id == $posts->user_id) --}}
                             <form action="/blog/{{ $posts->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Bạn có muốn xóa ?')"
                                     class="btn btn-danger">Xóa</button>
                             </form>
-                            {{-- @endif --}}
+
 
                         </td>
                     </tr>

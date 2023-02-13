@@ -16,19 +16,21 @@ class PostService
    // Thêm mới uploadFile
    public function storeUploadFile($files)
    {
-      $fileName = $files->getClientOriginalName();
-      $files->move(public_path('images/'), $fileName);
-      $data['field_image'] = $fileName;
-      File::create([
-         'image' => $fileName,
-         'user_id' => auth()->user()->id
-      ]);
+      if (!empty($files)) {
+         $fileName = $files->getClientOriginalName();
+         $files->move(public_path('images/'), $fileName);
+         $data['field_image'] = $fileName;
+         File::create([
+            'image' => $fileName,
+            'user_id' => auth()->user()->id
+         ]);
+      }
       return $fileName;
    }
    // Cập nhật mới uploadFile
    public function updateUploadFile($files)
    {
-      if ($files) {
+      if (!empty($files)) {
          $fileName = $files->getClientOriginalName();
          $files->move(public_path('images/'), $fileName);
          // lấy ra thêm image
@@ -41,5 +43,19 @@ class PostService
          unset($fileName);
       }
       return  $fileName;
+   }
+
+   // Viết chung 1 hàm store và update của File
+   public function uploadFile($file)
+   {
+      if (!empty($file)) {
+         $fileName = $file->getClientOriginalName();
+         $file->move(public_path('images/'), $fileName);
+         File::updateOrCreate([
+            'image' =>  $fileName,
+            'user_id' => auth()->user()->id,
+         ]);
+      }
+      return $fileName;
    }
 }
