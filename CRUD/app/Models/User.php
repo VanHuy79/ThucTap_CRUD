@@ -48,7 +48,6 @@ class User extends Authenticatable
     }
     public function image()
     {
-        return $this->belongsTo(File::class);
+        return $this->hasMany(File::class);
     }
-    
 }

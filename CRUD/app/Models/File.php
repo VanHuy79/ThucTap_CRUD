@@ -10,7 +10,7 @@ class File extends Model
 {
     use HasFactory;
     protected $table = 'file';
-    protected $primaryKey = 'id';
+    // protected $primaryKey = 'id';
 
     protected $fillable = [
         'image',

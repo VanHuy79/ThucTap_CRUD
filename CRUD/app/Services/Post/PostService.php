@@ -3,8 +3,7 @@
 namespace App\Services\Post;
 
 use App\Models\File;
-use App\Models\Post;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 // use Faker\Provider\File;
 
 /**
@@ -51,10 +50,10 @@ class PostService
       if (!empty($file)) {
          $fileName = $file->getClientOriginalName();
          $file->move(public_path('images/'), $fileName);
-         File::updateOrCreate([
-            'image' =>  $fileName,
-            'user_id' => auth()->user()->id,
-         ]);
+         // File::create([
+         //    'image' =>  $fileName,
+         //    'user_id' => 1,
+         // ]);
       }
       return $fileName;
    }

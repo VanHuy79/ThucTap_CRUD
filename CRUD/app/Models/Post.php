@@ -12,13 +12,13 @@ class Post extends Model
     // use Sluggable;
     protected $table = 'post';
     protected $primaryKey = 'id';
+
     // guarded là muốn lấy all tất cả các giá trị trong bảng
     protected $fillable = [
-        'id',
         'name',
         'description',
         'user_id',
-        'field_image'
+        'field_image',
     ];
     // Quan hệ bảng post với user
     public function user()
