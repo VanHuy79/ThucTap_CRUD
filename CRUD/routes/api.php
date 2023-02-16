@@ -3,8 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostAPIController;
-use App\Http\Controllers\AuthAPIController;
 use App\Http\Controllers\FileAPIController;
+use App\Http\Controllers\Repository\PostController;
+use App\Http\Controllers\Repository\FileController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,5 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('post', PostAPIController::class);
 Route::resource('file', FileAPIController::class);
+Route::resource('postBlog', PostController::class);
+Route::resource('postFile', FileController::class);
+// Route::resource('blog', RepositoryPostAPIController::class);
 // Route::post('login', 'api\UserController@login');
 // Route::post('login', [AuthAPIController::class, 'login']);

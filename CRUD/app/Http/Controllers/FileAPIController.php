@@ -29,8 +29,8 @@ class FileAPIController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
+        if ($request->hasFile('filed_image')) {
+            $file = $request->file('filed_image');
             $fileName = $file->getClientOriginalName();
             $file->move(public_path('images/'), $fileName);
             $params = [
@@ -66,7 +66,7 @@ class FileAPIController extends Controller
         }
         return response()->json([
             'success' => true,
-            'message' => $file,
+            'data' => $file,
         ]);
     }
 
@@ -93,7 +93,6 @@ class FileAPIController extends Controller
                 $params = [
                     'image' => $fileName,
                     'user_id' => 1,
-                    // 'field_image' => $fileName,
                 ];
                 $file = File::updateOrCreate($params);
 

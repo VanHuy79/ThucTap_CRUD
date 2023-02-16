@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Repository;
 
-use App\Models\File;
-use App\Models\Post;
-use App\Models\User;
 use Illuminate\Http\Request;
-use App\Services\Post\PostService;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\FileAPIController;
+use App\Http\Controllers\Controller;
+use App\Service\Post\PostServiceInterface;
 
-class PostAPIController extends Controller
+class PostController extends Controller
 {
+    private $postService;
+    public function __construct(PostServiceInterface $postService)
+    {
+        $this->postService = $postService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,14 +20,10 @@ class PostAPIController extends Controller
      */
     public function index()
     {
-        $post = Post::all();
-        if (!$post) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Không có bài Post nào',
-            ], 204);
-        }
+        $post = $this->postService->all();
+
         return response()->json([
+            'success' => true,
             'data' => $post,
         ], 200);
     }
@@ -45,12 +42,12 @@ class PostAPIController extends Controller
             'field_image' =>  $request->field_image,
             'user_id' => 1,
         ];
-        $post = Post::create($params);
 
+        $post = $this->postService->create($params);
         return response()->json([
             'success' => true,
-            'message' => 'Thêm mới thành công',
-            'data' => $post
+            'message' => 'Thêm thành công',
+            'data' => $post,
         ], 201);
     }
 
@@ -62,17 +59,18 @@ class PostAPIController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
-        if (!$post) {
+        $post = $this->postService->find($id);
+
+        if ($post) {
             return response()->json([
-                'success' => false,
-                'message' => 'Không tìm thấy bài Post nào',
-            ], 400);
+                'success' => true,
+                'data' => $post,
+            ], 200);
         }
         return response()->json([
-            'success' => true,
-            'message' => $post,
-        ], 200);
+            'success' => false,
+            'message' => 'Không tìm thấy dữ liệu',
+        ], 400);
     }
 
     /**
@@ -84,28 +82,24 @@ class PostAPIController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $post = Post::find($id);
-        if (!$post) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Không tìm thấy post cần cập nhật',
-            ], 400);
-        }
         $params = [
             'name' => $request->name,
             'description' => $request->description,
             'field_image' => $request->field_image,
             'user_id' => 1,
         ];
-        // $post->image()->delete();
-        // dd($params);
-        $post->update($params);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Cập nhật thành công',
-            'data' => $post
-        ], 200);
+        $post = $this->postService->update($params, $id);
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Cập nhật thành công',
+                'data' => $post
+            ], 200);
+        }
+        return response()->json([ 
+            'success' => false,
+            'message' => 'Không tìm thấy Post cần cập nhật'
+        ], 400);
     }
 
     /**
@@ -116,24 +110,17 @@ class PostAPIController extends Controller
      */
     public function destroy($id)
     {
-        $posts = Post::find($id);
-        if (!$posts) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Không tìm thấy Post cần xóa',
-            ], 400);
-        } else {
-            // $image = File::where('image', $posts->field_image)->first();
-            // $image->delete();
-
-            $posts->delete();
-            // \File::delete('images/' . $posts->image);
-
+        $post = $this->postService->delete($id);
+        if ($post) {
             return response()->json([
                 'success' => true,
                 'message' => 'Xóa thành công',
-                'data' => $posts,
+                'data' => $post,
             ], 204);
         }
+        return response()->json([
+            'success' => false,
+            'message' => ' Không tìm thấy Post để xóa',
+        ], 400);
     }
 }
