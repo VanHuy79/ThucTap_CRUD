@@ -1,0 +1,342 @@
+openapi: 3.0.3
+info:
+  title: Laravel
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/postBlog:
+    get:
+      summary: 'Display a listing of the resource.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: multipart/form-data
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"success\": true\n  \"data\": {\n     \"id\": 195,\n     \"name\": \"bài 2\",\n     \"description\": \"bài 2\"\n     \"field_image\": \"anh2.jpg\",\n     \"user_id\": 1,\n     \"created_at\": \"2023-02-16 07:47:36\",\n     \"updated_at\": \"2023-02-16 07:53:31\",\n   }\n}"
+        500:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"success\": false\n  \"message\": \"Internal Server Error.\"\n}"
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Tên của bài Post.'
+                  example: eligendi
+                description:
+                  type: required
+                  description: 'Mô tả của bài Post.'
+                  example: ducimus
+                field_image:
+                  type: string
+                  format: binary
+                  description: 'Ảnh của bài Post.'
+                user_id:
+                  type: integer
+                  description: 'ID của người dùng tạo ra bài viết.'
+                  example: 9
+              required:
+                - name
+                - field_image
+                - user_id
+      security: []
+    post:
+      summary: 'Store a newly created resource in storage.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        201:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n\"success\": true\n\"data\": {\n     \"id\": 202,\n     \"name\": \"Post Test\",\n     \"description\": \"bài 2\"\n     \"field_image\": \"anh3.png\",\n     \"user_id\": 1,\n     \"created_at\": \"2023-02-16 07:47:36\",\n     \"updated_at\": \"2023-02-16 07:47:36\",\n }\n \"message\": \"Thêm mới thành công\"\n},"
+        401:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"success\": false\n  \"message\": \"Unauthenticated.\"\n}"
+        403:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"success\": false\n  \"message\": \"This action is unauthorized.\"\n}"
+        500:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"success\": false\n  \"message\": \"Internal Server Error.\"\n}"
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Tên của bài Post.'
+                  example: id
+                description:
+                  type: required
+                  description: 'Mô tả của bài Post.'
+                  example: maiores
+                field_image:
+                  type: required
+                  description: 'Ảnh của bài Post.'
+                  example: et
+                user_id:
+                  type: integer
+                  description: 'ID của người dùng tạo ra bài viết.'
+                  example: 4
+              required:
+                - name
+                - user_id
+      security: []
+  '/api/postBlog/{id}':
+    get:
+      summary: 'Display the specified resource.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n    \"success\": true\n    \"data\": {\n         \"id\": 202,\n         \"name\": \"Post Test\",\n         \"description\": \"Post Test\"\n         \"filed_image\": \"anh3.png\",\n         \"user_id\": 1,\n         \"created_at\": \"2023-02-16 07:47:36\",\n         \"updated_at\": \"2023-02-16 07:47:36\",\n     }\n},"
+        400:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n     \"success\": false\n     \"message\": \"Không tìm thấy Post cần tìm\"\n}"
+        401:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"success\": false\n  \"message\": \"Unauthenticated.\"\n}"
+        403:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"success\": false\n  \"message\": \"This action is unauthorized.\"\n}"
+        500:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"success\": false\n  \"message\": \"Internal Server Error.\"\n}"
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: 'Update the specified resource in storage.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: multipart/form-data
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n\"success\": true\n\"data\": {\n     \"id\": 202,\n     \"name\": \"Post Cập Nhật\",\n     \"description\": \"Post Cập Nhật\"\n     \"field_image\": \"anh2.jpg\",\n     \"user_id\": 2,\n     \"created_at\": \"2023-02-16 07:47:36\",\n     \"updated_at\": \"2023-02-16 07:47:36\",\n }\n\"message\": \"Cập nhật thành công\"\n},"
+        400:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n     \"success\": false\n     \"message\": \"Không tìm thấy Post cần tìm\"\n}"
+        401:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"success\": false\n  \"message\": \"Unauthenticated.\"\n}"
+        403:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"success\": false\n  \"message\": \"This action is unauthorized.\"\n}"
+        500:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"success\": false\n  \"message\": \"Internal Server Error.\"\n}"
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Tên của bài Post.'
+                  example: est
+                description:
+                  type: required
+                  description: 'Mô tả của bài Post.'
+                  example: laborum
+                field_image:
+                  type: string
+                  format: binary
+                  description: 'Ảnh của bài Post.'
+                user_id:
+                  type: integer
+                  description: 'ID của người dùng tạo ra bài viết.'
+                  example: 14
+              required:
+                - name
+                - field_image
+                - user_id
+      security: []
+    delete:
+      summary: 'Remove the specified resource from storage.'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        204:
+          description: ''
+        400:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n     \"success\": false\n     \"message\": \"Không tìm thấy Post cần xóa\"\n}"
+        500:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n  \"success\": false\n  \"message\": \"Internal Server Error.\"\n}"
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the postBlog.'
+        example: rem
+        required: true
+        schema:
+          type: string
+tags:
+  -
+    name: Endpoints
+    description: ''

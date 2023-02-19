@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Services\Post\PostService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FileAPIController;
+use App\Http\Requests\PostRequest;
 
 class PostAPIController extends Controller
 {
@@ -37,7 +38,7 @@ class PostAPIController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         $params = [
             'name' => $request->name,
@@ -82,7 +83,7 @@ class PostAPIController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
         $post = Post::find($id);
         if (!$post) {

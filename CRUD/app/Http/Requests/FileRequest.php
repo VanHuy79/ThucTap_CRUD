@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostRequest extends FormRequest
+class FileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,14 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'field_image' => 'required',
+            'image' => 'required|image',
         ];
     }
 
-    // public function messages()
-    // {
-    //     return [
-    //         'name.max' => 'Không được quá 3',
-    //         'name.required' => 'Yêu cầu nhập'
-    //     ];
-    // }
+    public function messages() {
+        return [
+            'image.required' => 'Yâu cầu chọn File ảnh',
+            'image.image' => 'Phải là ảnh',
+        ];
+    }
 }

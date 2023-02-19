@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FileRequest;
 use App\Models\File;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class FileAPIController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FileRequest $request)
     {
         if ($request->hasFile('filed_image')) {
             $file = $request->file('filed_image');
@@ -77,7 +78,7 @@ class FileAPIController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FileRequest $request, $id)
     {
         $fileID = File::find($id);
         if (!$fileID) {

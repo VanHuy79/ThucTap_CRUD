@@ -1,0 +1,373 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost"
+        }
+    ],
+    "info": {
+        "name": "Laravel",
+        "_postman_id": "71c01d35-556a-4db8-9037-ec8f703ed301",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "Display a listing of the resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/postBlog",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/postBlog"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "name",
+                                    "value": "eligendi",
+                                    "type": "text",
+                                    "description": "T\u00ean c\u1ee7a b\u00e0i Post."
+                                },
+                                {
+                                    "key": "description",
+                                    "value": "ducimus",
+                                    "type": "text",
+                                    "description": "M\u00f4 t\u1ea3 c\u1ee7a b\u00e0i Post."
+                                },
+                                {
+                                    "key": "user_id",
+                                    "value": 9,
+                                    "type": "text",
+                                    "description": "ID c\u1ee7a ng\u01b0\u1eddi d\u00f9ng t\u1ea1o ra b\u00e0i vi\u1ebft."
+                                },
+                                {
+                                    "key": "field_image",
+                                    "src": [],
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true\n  \"data\": {\n     \"id\": 195,\n     \"name\": \"b\u00e0i 2\",\n     \"description\": \"b\u00e0i 2\"\n     \"field_image\": \"anh2.jpg\",\n     \"user_id\": 1,\n     \"created_at\": \"2023-02-16 07:47:36\",\n     \"updated_at\": \"2023-02-16 07:53:31\",\n   }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false\n  \"message\": \"Internal Server Error.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/postBlog",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/postBlog"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"id\",\"description\":\"maiores\",\"field_image\":\"et\",\"user_id\":4}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n\"success\": true\n\"data\": {\n     \"id\": 202,\n     \"name\": \"Post Test\",\n     \"description\": \"b\u00e0i 2\"\n     \"field_image\": \"anh3.png\",\n     \"user_id\": 1,\n     \"created_at\": \"2023-02-16 07:47:36\",\n     \"updated_at\": \"2023-02-16 07:47:36\",\n }\n \"message\": \"Th\u00eam m\u1edbi th\u00e0nh c\u00f4ng\"\n},",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"success\": false\n  \"message\": \"Unauthenticated.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"success\": false\n  \"message\": \"This action is unauthorized.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false\n  \"message\": \"Internal Server Error.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display the specified resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/postBlog\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/postBlog\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "rem",
+                                    "description": "The ID of the postBlog."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n    \"success\": true\n    \"data\": {\n         \"id\": 202,\n         \"name\": \"Post Test\",\n         \"description\": \"Post Test\"\n         \"filed_image\": \"anh3.png\",\n         \"user_id\": 1,\n         \"created_at\": \"2023-02-16 07:47:36\",\n         \"updated_at\": \"2023-02-16 07:47:36\",\n     }\n},",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\n     \"success\": false\n     \"message\": \"Kh\u00f4ng t\u00ecm th\u1ea5y Post c\u1ea7n t\u00ecm\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"success\": false\n  \"message\": \"Unauthenticated.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"success\": false\n  \"message\": \"This action is unauthorized.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false\n  \"message\": \"Internal Server Error.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the specified resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/postBlog\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/postBlog\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "sapiente",
+                                    "description": "The ID of the postBlog."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "name",
+                                    "value": "est",
+                                    "type": "text",
+                                    "description": "T\u00ean c\u1ee7a b\u00e0i Post."
+                                },
+                                {
+                                    "key": "description",
+                                    "value": "laborum",
+                                    "type": "text",
+                                    "description": "M\u00f4 t\u1ea3 c\u1ee7a b\u00e0i Post."
+                                },
+                                {
+                                    "key": "user_id",
+                                    "value": 14,
+                                    "type": "text",
+                                    "description": "ID c\u1ee7a ng\u01b0\u1eddi d\u00f9ng t\u1ea1o ra b\u00e0i vi\u1ebft."
+                                },
+                                {
+                                    "key": "field_image",
+                                    "src": [],
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "_method",
+                                    "value": "PUT",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n\"success\": true\n\"data\": {\n     \"id\": 202,\n     \"name\": \"Post C\u1eadp Nh\u1eadt\",\n     \"description\": \"Post C\u1eadp Nh\u1eadt\"\n     \"field_image\": \"anh2.jpg\",\n     \"user_id\": 2,\n     \"created_at\": \"2023-02-16 07:47:36\",\n     \"updated_at\": \"2023-02-16 07:47:36\",\n }\n\"message\": \"C\u1eadp nh\u1eadt th\u00e0nh c\u00f4ng\"\n},",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\n     \"success\": false\n     \"message\": \"Kh\u00f4ng t\u00ecm th\u1ea5y Post c\u1ea7n t\u00ecm\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"success\": false\n  \"message\": \"Unauthenticated.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 403,
+                            "body": "{\n  \"success\": false\n  \"message\": \"This action is unauthorized.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false\n  \"message\": \"Internal Server Error.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Remove the specified resource from storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/postBlog\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/postBlog\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "eveniet",
+                                    "description": "The ID of the postBlog."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "{\n  \"success\": true\n  \"message\": \"X\u00f3a th\u00e0nh c\u00f4ng\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\n     \"success\": false\n     \"message\": \"Kh\u00f4ng t\u00ecm th\u1ea5y Post c\u1ea7n x\u00f3a\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false\n  \"message\": \"Internal Server Error.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}

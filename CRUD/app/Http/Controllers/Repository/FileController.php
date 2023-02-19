@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Repository;
 use App\Service\File\FileServiceInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FileRequest;
 
 class FileController extends Controller
 {
@@ -39,10 +40,10 @@ class FileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FileRequest $request)
     {
-        if ($request->hasFile('field_image')) {
-            $file = $request->file('field_image');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
             $fileName = $file->getClientOriginalName();
             $file->move(public_path('images/'), $fileName);
             $params = [
@@ -89,7 +90,7 @@ class FileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FileRequest $request, $id)
     {
         if ($request->hasFile('field_image')) {
             $file = $request->file('field_image');

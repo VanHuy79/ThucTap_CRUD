@@ -1,0 +1,946 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Laravel Documentation</title>
+
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../docs/css/theme-default.style.css" media="screen">
+    <link rel="stylesheet" href="../docs/css/theme-default.print.css" media="print">
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/styles/obsidian.min.css">
+    <script src="https://unpkg.com/@highlightjs/cdn-assets@10.7.2/highlight.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jets/0.14.1/jets.min.js"></script>
+
+    <style id="language-style">
+        /* starts out as display none and is replaced with js later  */
+                    body .content .bash-example code { display: none; }
+                    body .content .javascript-example code { display: none; }
+            </style>
+
+    <script>
+        var baseUrl = "http://localhost";
+        var useCsrf = Boolean();
+        var csrfUrl = "/sanctum/csrf-cookie";
+    </script>
+    <script src="../docs/js/tryitout-3.37.2.js"></script>
+
+    <script src="../docs/js/theme-default-3.37.2.js"></script>
+
+</head>
+
+<body data-languages="[&quot;bash&quot;,&quot;javascript&quot;]">
+
+<a href="#" id="nav-button">
+    <span>
+        MENU
+        <img src="../docs/images/navbar.png" alt="navbar-image" />
+    </span>
+</a>
+<div class="tocify-wrapper">
+    
+            <div class="lang-selector">
+                                            <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                            <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                    </div>
+    
+    <div class="search">
+        <input type="text" class="search" id="input-search" placeholder="Search">
+    </div>
+
+    <div id="toc">
+                                                                            <ul id="tocify-header-0" class="tocify-header">
+                    <li class="tocify-item level-1" data-unique="introduction">
+                        <a href="#introduction">Introduction</a>
+                    </li>
+                                            
+                                                                    </ul>
+                                                <ul id="tocify-header-1" class="tocify-header">
+                    <li class="tocify-item level-1" data-unique="authenticating-requests">
+                        <a href="#authenticating-requests">Authenticating requests</a>
+                    </li>
+                                            
+                                                </ul>
+                    
+                    <ul id="tocify-header-2" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="endpoints">
+                    <a href="#endpoints">Endpoints</a>
+                </li>
+                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-postBlog">
+                        <a href="#endpoints-GETapi-postBlog">Display a listing of the resource.</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-postBlog">
+                        <a href="#endpoints-POSTapi-postBlog">Store a newly created resource in storage.</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-postBlog--id-">
+                        <a href="#endpoints-GETapi-postBlog--id-">Display the specified resource.</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-PUTapi-postBlog--id-">
+                        <a href="#endpoints-PUTapi-postBlog--id-">Update the specified resource in storage.</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="endpoints-DELETEapi-postBlog--id-">
+                        <a href="#endpoints-DELETEapi-postBlog--id-">Remove the specified resource from storage.</a>
+                    </li>
+                                                    </ul>
+                            </ul>
+        
+                        
+            </div>
+
+            <ul class="toc-footer" id="toc-footer">
+                            <li><a href="../docs/collection.json">View Postman collection</a></li>
+                            <li><a href="../docs/openapi.yaml">View OpenAPI spec</a></li>
+                            <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
+                    </ul>
+        <ul class="toc-footer" id="last-updated">
+        <li>Last updated: February 17 2023</li>
+    </ul>
+</div>
+
+<div class="page-wrapper">
+    <div class="dark-box"></div>
+    <div class="content">
+        <h1 id="introduction">Introduction</h1>
+<p>This documentation aims to provide all the information you need to work with our API.</p>
+<aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
+You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
+<blockquote>
+<p>Base URL</p>
+</blockquote>
+<pre><code class="language-yaml">http://localhost</code></pre>
+
+        <h1 id="authenticating-requests">Authenticating requests</h1>
+<p>This API is not authenticated.</p>
+
+        <h1 id="endpoints">Endpoints</h1>
+
+    
+
+            <h2 id="endpoints-GETapi-postBlog">Display a listing of the resource.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-postBlog">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/postBlog" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "name=eligendi" \
+    --form "description=ducimus" \
+    --form "user_id=9" \
+    --form "field_image=@C:\Users\ngohu\AppData\Local\Temp\phpB50A.tmp" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/postBlog"
+);
+
+const headers = {
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('name', 'eligendi');
+body.append('description', 'ducimus');
+body.append('user_id', '9');
+body.append('field_image', document.querySelector('input[name="field_image"]').files[0]);
+
+fetch(url, {
+    method: "GET",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-postBlog">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+  &quot;success&quot;: true
+  &quot;data&quot;: {
+     &quot;id&quot;: 195,
+     &quot;name&quot;: &quot;b&agrave;i 2&quot;,
+     &quot;description&quot;: &quot;b&agrave;i 2&quot;
+     &quot;field_image&quot;: &quot;anh2.jpg&quot;,
+     &quot;user_id&quot;: 1,
+     &quot;created_at&quot;: &quot;2023-02-16 07:47:36&quot;,
+     &quot;updated_at&quot;: &quot;2023-02-16 07:53:31&quot;,
+   }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+  &quot;success&quot;: false
+  &quot;message&quot;: &quot;Internal Server Error.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-postBlog" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-postBlog"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-postBlog"></code></pre>
+</span>
+<span id="execution-error-GETapi-postBlog" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-postBlog"></code></pre>
+</span>
+<form id="form-GETapi-postBlog" data-method="GET"
+      data-path="api/postBlog"
+      data-authed="0"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"multipart\/form-data","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-postBlog', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-postBlog"
+                    onclick="tryItOut('GETapi-postBlog');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-postBlog"
+                    onclick="cancelTryOut('GETapi-postBlog');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-postBlog" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/postBlog</code></b>
+        </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="name"
+               data-endpoint="GETapi-postBlog"
+               value="eligendi"
+               data-component="body" hidden>
+    <br>
+<p>Tên của bài Post.</p>
+        </p>
+                <p>
+            <b><code>description</code></b>&nbsp;&nbsp;<small>required</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="description"
+               data-endpoint="GETapi-postBlog"
+               value="ducimus"
+               data-component="body" hidden>
+    <br>
+<p>Mô tả của bài Post.</p>
+        </p>
+                <p>
+            <b><code>field_image</code></b>&nbsp;&nbsp;<small>file</small>  &nbsp;
+                <input type="file"
+               name="field_image"
+               data-endpoint="GETapi-postBlog"
+               value=""
+               data-component="body" hidden>
+    <br>
+<p>Ảnh của bài Post.</p>
+        </p>
+                <p>
+            <b><code>user_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="user_id"
+               data-endpoint="GETapi-postBlog"
+               value="9"
+               data-component="body" hidden>
+    <br>
+<p>ID của người dùng tạo ra bài viết.</p>
+        </p>
+        </form>
+
+            <h2 id="endpoints-POSTapi-postBlog">Store a newly created resource in storage.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-POSTapi-postBlog">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost/api/postBlog" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"id\",
+    \"description\": \"maiores\",
+    \"field_image\": \"et\",
+    \"user_id\": 4
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/postBlog"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "name": "id",
+    "description": "maiores",
+    "field_image": "et",
+    "user_id": 4
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-postBlog">
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+&quot;success&quot;: true
+&quot;data&quot;: {
+     &quot;id&quot;: 202,
+     &quot;name&quot;: &quot;Post Test&quot;,
+     &quot;description&quot;: &quot;b&agrave;i 2&quot;
+     &quot;field_image&quot;: &quot;anh3.png&quot;,
+     &quot;user_id&quot;: 1,
+     &quot;created_at&quot;: &quot;2023-02-16 07:47:36&quot;,
+     &quot;updated_at&quot;: &quot;2023-02-16 07:47:36&quot;,
+ }
+ &quot;message&quot;: &quot;Th&ecirc;m mới th&agrave;nh c&ocirc;ng&quot;
+},</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+  &quot;success&quot;: false
+  &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+  &quot;success&quot;: false
+  &quot;message&quot;: &quot;This action is unauthorized.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+  &quot;success&quot;: false
+  &quot;message&quot;: &quot;Internal Server Error.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-postBlog" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-postBlog"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-postBlog"></code></pre>
+</span>
+<span id="execution-error-POSTapi-postBlog" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-postBlog"></code></pre>
+</span>
+<form id="form-POSTapi-postBlog" data-method="POST"
+      data-path="api/postBlog"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-postBlog', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-postBlog"
+                    onclick="tryItOut('POSTapi-postBlog');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-postBlog"
+                    onclick="cancelTryOut('POSTapi-postBlog');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-postBlog" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/postBlog</code></b>
+        </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="name"
+               data-endpoint="POSTapi-postBlog"
+               value="id"
+               data-component="body" hidden>
+    <br>
+<p>Tên của bài Post.</p>
+        </p>
+                <p>
+            <b><code>description</code></b>&nbsp;&nbsp;<small>required</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="description"
+               data-endpoint="POSTapi-postBlog"
+               value="maiores"
+               data-component="body" hidden>
+    <br>
+<p>Mô tả của bài Post.</p>
+        </p>
+                <p>
+            <b><code>field_image</code></b>&nbsp;&nbsp;<small>required</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="field_image"
+               data-endpoint="POSTapi-postBlog"
+               value="et"
+               data-component="body" hidden>
+    <br>
+<p>Ảnh của bài Post.</p>
+        </p>
+                <p>
+            <b><code>user_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="user_id"
+               data-endpoint="POSTapi-postBlog"
+               value="4"
+               data-component="body" hidden>
+    <br>
+<p>ID của người dùng tạo ra bài viết.</p>
+        </p>
+        </form>
+
+            <h2 id="endpoints-GETapi-postBlog--id-">Display the specified resource.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-GETapi-postBlog--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost/api/postBlog/rem" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/postBlog/rem"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-postBlog--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;success&quot;: true
+    &quot;data&quot;: {
+         &quot;id&quot;: 202,
+         &quot;name&quot;: &quot;Post Test&quot;,
+         &quot;description&quot;: &quot;Post Test&quot;
+         &quot;filed_image&quot;: &quot;anh3.png&quot;,
+         &quot;user_id&quot;: 1,
+         &quot;created_at&quot;: &quot;2023-02-16 07:47:36&quot;,
+         &quot;updated_at&quot;: &quot;2023-02-16 07:47:36&quot;,
+     }
+},</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+     &quot;success&quot;: false
+     &quot;message&quot;: &quot;Kh&ocirc;ng t&igrave;m thấy Post cần t&igrave;m&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+  &quot;success&quot;: false
+  &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+  &quot;success&quot;: false
+  &quot;message&quot;: &quot;This action is unauthorized.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+  &quot;success&quot;: false
+  &quot;message&quot;: &quot;Internal Server Error.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-postBlog--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-postBlog--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-postBlog--id-"></code></pre>
+</span>
+<span id="execution-error-GETapi-postBlog--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-postBlog--id-"></code></pre>
+</span>
+<form id="form-GETapi-postBlog--id-" data-method="GET"
+      data-path="api/postBlog/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-postBlog--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-postBlog--id-"
+                    onclick="tryItOut('GETapi-postBlog--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-postBlog--id-"
+                    onclick="cancelTryOut('GETapi-postBlog--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-postBlog--id-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/postBlog/{id}</code></b>
+        </p>
+                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>id</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="id"
+               data-endpoint="GETapi-postBlog--id-"
+               value="rem"
+               data-component="url" hidden>
+    <br>
+<p>The ID of the postBlog.</p>
+            </p>
+                    </form>
+
+            <h2 id="endpoints-PUTapi-postBlog--id-">Update the specified resource in storage.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-PUTapi-postBlog--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost/api/postBlog/sapiente" \
+    --header "Content-Type: multipart/form-data" \
+    --header "Accept: application/json" \
+    --form "name=est" \
+    --form "description=laborum" \
+    --form "user_id=14" \
+    --form "field_image=@C:\Users\ngohu\AppData\Local\Temp\phpB55A.tmp" </code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/postBlog/sapiente"
+);
+
+const headers = {
+    "Content-Type": "multipart/form-data",
+    "Accept": "application/json",
+};
+
+const body = new FormData();
+body.append('name', 'est');
+body.append('description', 'laborum');
+body.append('user_id', '14');
+body.append('field_image', document.querySelector('input[name="field_image"]').files[0]);
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-postBlog--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+&quot;success&quot;: true
+&quot;data&quot;: {
+     &quot;id&quot;: 202,
+     &quot;name&quot;: &quot;Post Cập Nhật&quot;,
+     &quot;description&quot;: &quot;Post Cập Nhật&quot;
+     &quot;field_image&quot;: &quot;anh2.jpg&quot;,
+     &quot;user_id&quot;: 2,
+     &quot;created_at&quot;: &quot;2023-02-16 07:47:36&quot;,
+     &quot;updated_at&quot;: &quot;2023-02-16 07:47:36&quot;,
+ }
+&quot;message&quot;: &quot;Cập nhật th&agrave;nh c&ocirc;ng&quot;
+},</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+     &quot;success&quot;: false
+     &quot;message&quot;: &quot;Kh&ocirc;ng t&igrave;m thấy Post cần t&igrave;m&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+  &quot;success&quot;: false
+  &quot;message&quot;: &quot;Unauthenticated.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (403):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+  &quot;success&quot;: false
+  &quot;message&quot;: &quot;This action is unauthorized.&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+  &quot;success&quot;: false
+  &quot;message&quot;: &quot;Internal Server Error.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PUTapi-postBlog--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-postBlog--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-postBlog--id-"></code></pre>
+</span>
+<span id="execution-error-PUTapi-postBlog--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-postBlog--id-"></code></pre>
+</span>
+<form id="form-PUTapi-postBlog--id-" data-method="PUT"
+      data-path="api/postBlog/{id}"
+      data-authed="0"
+      data-hasfiles="1"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"multipart\/form-data","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-postBlog--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-postBlog--id-"
+                    onclick="tryItOut('PUTapi-postBlog--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-postBlog--id-"
+                    onclick="cancelTryOut('PUTapi-postBlog--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-postBlog--id-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/postBlog/{id}</code></b>
+        </p>
+            <p>
+            <small class="badge badge-purple">PATCH</small>
+            <b><code>api/postBlog/{id}</code></b>
+        </p>
+                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>id</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="id"
+               data-endpoint="PUTapi-postBlog--id-"
+               value="sapiente"
+               data-component="url" hidden>
+    <br>
+<p>The ID of the postBlog.</p>
+            </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="name"
+               data-endpoint="PUTapi-postBlog--id-"
+               value="est"
+               data-component="body" hidden>
+    <br>
+<p>Tên của bài Post.</p>
+        </p>
+                <p>
+            <b><code>description</code></b>&nbsp;&nbsp;<small>required</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="description"
+               data-endpoint="PUTapi-postBlog--id-"
+               value="laborum"
+               data-component="body" hidden>
+    <br>
+<p>Mô tả của bài Post.</p>
+        </p>
+                <p>
+            <b><code>field_image</code></b>&nbsp;&nbsp;<small>file</small>  &nbsp;
+                <input type="file"
+               name="field_image"
+               data-endpoint="PUTapi-postBlog--id-"
+               value=""
+               data-component="body" hidden>
+    <br>
+<p>Ảnh của bài Post.</p>
+        </p>
+                <p>
+            <b><code>user_id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="user_id"
+               data-endpoint="PUTapi-postBlog--id-"
+               value="14"
+               data-component="body" hidden>
+    <br>
+<p>ID của người dùng tạo ra bài viết.</p>
+        </p>
+        </form>
+
+            <h2 id="endpoints-DELETEapi-postBlog--id-">Remove the specified resource from storage.</h2>
+
+<p>
+</p>
+
+
+
+<span id="example-requests-DELETEapi-postBlog--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "http://localhost/api/postBlog/eveniet" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost/api/postBlog/eveniet"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-postBlog--id-">
+            <blockquote>
+            <p>Example response (204):</p>
+        </blockquote>
+                <pre>
+<code>[Empty response]</code>
+ </pre>
+            <blockquote>
+            <p>Example response (400):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+     &quot;success&quot;: false
+     &quot;message&quot;: &quot;Kh&ocirc;ng t&igrave;m thấy Post cần x&oacute;a&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+  &quot;success&quot;: false
+  &quot;message&quot;: &quot;Internal Server Error.&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-DELETEapi-postBlog--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-postBlog--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-postBlog--id-"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-postBlog--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-postBlog--id-"></code></pre>
+</span>
+<form id="form-DELETEapi-postBlog--id-" data-method="DELETE"
+      data-path="api/postBlog/{id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-postBlog--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-postBlog--id-"
+                    onclick="tryItOut('DELETEapi-postBlog--id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-postBlog--id-"
+                    onclick="cancelTryOut('DELETEapi-postBlog--id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-postBlog--id-" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/postBlog/{id}</code></b>
+        </p>
+                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>id</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="id"
+               data-endpoint="DELETEapi-postBlog--id-"
+               value="eveniet"
+               data-component="url" hidden>
+    <br>
+<p>The ID of the postBlog.</p>
+            </p>
+                    </form>
+
+    
+
+        
+    </div>
+    <div class="dark-box">
+                    <div class="lang-selector">
+                                                        <button type="button" class="lang-button" data-language-name="bash">bash</button>
+                                                        <button type="button" class="lang-button" data-language-name="javascript">javascript</button>
+                            </div>
+            </div>
+</div>
+</body>
+</html>
