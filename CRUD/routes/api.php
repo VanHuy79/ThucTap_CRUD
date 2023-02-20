@@ -25,7 +25,7 @@ use App\Http\Controllers\Repository\FileController;
 // Route::resource('post', PostAPIController::class);
 // Route::resource('file', FileAPIController::class);
 Route::resource('postBlog', PostController::class);
-// Route::resource('postFile', FileController::class);
+Route::resource('postFile', FileController::class);
 // Route::resource('blog', RepositoryPostAPIController::class);
 // Route::post('login', 'api\UserController@login');
 // Route::post('login', [AuthAPIController::class, 'login']);

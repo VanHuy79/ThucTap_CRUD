@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Repository;
 
-use App\Service\File\FileServiceInterface;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\FileRequest;
+use App\Http\Controllers\Controller;
+use App\Imports\FileImport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Service\File\FileServiceInterface;
 
 class FileController extends Controller
 {
@@ -40,26 +42,47 @@ class FileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(FileRequest $request)
+    public function store(Request $request)
     {
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = $file->getClientOriginalName();
-            $file->move(public_path('images/'), $fileName);
-            $params = [
-                'image' => $fileName,
-                'user_id' => 1,
-                // 'field_image' => $fileName,
-            ];
-
-            $file = $this->fileService->create($params);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Thêm mới thành công',
-                'data' => $fileName,
-            ], 201);
+            $fileCSV = $request->file('image');
         }
+
+        if (!file_exists($fileCSV)) {
+            return response()->json(['message' => 'CSV không tồn tại'], 400);
+        }
+
+        $csvFileName = $fileCSV->getClientOriginalName();
+        $csvFilePath = $fileCSV->storeAs('csv', $csvFileName, 'public');
+
+
+        $fileImport = new FileImport();
+        $data = Excel::import($fileImport, storage_path('app/public/' . $csvFilePath));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Thêm thành công',
+            'data' => $data,
+        ], 201);
+        // Cách upload API
+        // if ($request->hasFile('image')) {
+        //     $file = $request->file('image');
+        //     $fileName = $file->getClientOriginalName();
+        //     $file->move(public_path('images/'), $fileName);
+        //     $params = [
+        //         'image' => $fileName,
+        //         'user_id' => 1,
+        //         // 'field_image' => $fileName,
+        //     ];
+
+        //     $file = $this->fileService->create($params);
+
+        //     return response()->json([
+        //         'success' => true,
+        //         'message' => 'Thêm mới thành công',
+        //         'data' => $fileName,
+        //     ], 201);
+        // }
     }
 
     /**
@@ -130,11 +153,11 @@ class FileController extends Controller
                 'success' => true,
                 'message' => 'Xóa thành công',
                 'data' => $file,
-            ]);
+            ], 204);
         }
         return response()->json([
             'success' => false,
             'message' => 'Không tìm thấy File ảnh cần xóa',
-        ]);
+        ], 400);
     }
 }
