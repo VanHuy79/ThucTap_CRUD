@@ -44,21 +44,13 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasFile('image')) {
-            $fileCSV = $request->file('image');
+        $filename = 'data.csv';
+        $filePath = public_path('excels/' . $filename);
+        if (!file_exists($filePath)) {
+            return response()->json(['message' => 'Không tìm thấy csv'], 404);
         }
-
-        if (!file_exists($fileCSV)) {
-            return response()->json(['message' => 'CSV không tồn tại'], 400);
-        }
-
-        $csvFileName = $fileCSV->getClientOriginalName();
-        $csvFilePath = $fileCSV->storeAs('csv', $csvFileName, 'public');
-
-
         $fileImport = new FileImport();
-        $data = Excel::import($fileImport, storage_path('app/public/' . $csvFilePath));
-
+        $data = Excel::import($fileImport, $filePath);
         return response()->json([
             'success' => true,
             'message' => 'Thêm thành công',
