@@ -44,16 +44,35 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        $filename = 'data.csv';
-        $filePath = public_path('excels/' . $filename);
-        if (!file_exists($filePath)) {
-            return response()->json(['message' => 'Không tìm thấy csv'], 404);
-        }
-        $fileImport = new FileImport();
-        $data = Excel::import($fileImport, $filePath);
+        //$filename = 'data.csv';
+        //$filePath = public_path('excels/' . $filename);
+        //if (!file_exists($filePath)) {
+            //return response()->json(['message' => 'Không tìm thấy csv'], 404);
+       // }
+       // $fileImport = new FileImport();
+       // $data = Excel::import($fileImport, $filePath);
+       // return response()->json([
+           // 'success' => true,
+            //'message' => 'Thêm thành công',
+           // 'data' => $data,
+        //], 201);
+        
+        $url = 'https://cdn.topcv.vn/80/company_logos/cong-ty-tnhh-cybridge-a-chau-63f2df44341f3.jpg';
+        // Lấy nội dung tập tin từ URL
+        $fileContent = file_get_contents($url);
+        // Tạo tên tập tin mới
+        $fileName = basename($url);
+        // Lưu tập tin vào thư mục trên máy chủ
+        Storage::put('public/files/' . $fileName, $fileContent);
+        // Tạo bản ghi mới trong bảng File
+        $params = [
+            'image' => $fileName,
+            'user_id' => 1,
+        ];
+        $data = File::create($params);
         return response()->json([
             'success' => true,
-            'message' => 'Thêm thành công',
+            'message' => 'Thêm mới thành công',
             'data' => $data,
         ], 201);
         // Cách upload API
