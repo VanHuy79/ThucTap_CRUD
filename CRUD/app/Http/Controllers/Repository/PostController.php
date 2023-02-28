@@ -41,12 +41,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post = $this->postService->all();
+        $post = $this->postService->getAll();
 
-        return response()->json([
-            'success' => true,
-            'data' => $post,
-        ], 200);
+        return $post;
     }
     /**
      * This will be in the "Servers" subgroup of "Resource management"
@@ -89,19 +86,8 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $params = [
-            'name' => $request->name,
-            'description' => $request->description,
-            'field_image' =>  $request->field_image,
-            'user_id' => 1,
-        ];
-
-        $post = $this->postService->create($params);
-        return response()->json([
-            'success' => true,
-            'message' => 'Thêm thành công',
-            'data' => $post,
-        ], 201);
+        $data = $this->postService->createPost($request);
+        return $data;
     }
 
     /**
@@ -140,18 +126,18 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = $this->postService->find($id);
-
-        if ($post) {
-            return response()->json([
-                'success' => true,
-                'data' => $post,
-            ], 200);
-        }
-        return response()->json([
-            'success' => false,
-            'message' => 'Không tìm thấy dữ liệu',
-        ], 400);
+        $data = $this->postService->showPost($id);
+        return $data;
+        // if ($post) {
+        //     return response()->json([
+        //         'success' => true,
+        //         'data' => $post,
+        //     ], 200);
+        // }
+        // return response()->json([
+        //     'success' => false,
+        //     'message' => 'Không tìm thấy dữ liệu',
+        // ], 400);
     }
 
     /**
@@ -196,24 +182,8 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, $id)
     {
-        $params = [
-            'name' => $request->name,
-            'description' => $request->description,
-            'field_image' =>  $request->field_image,
-            'user_id' => 1,
-        ];
-        $post = $this->postService->update($params, $id);
-        if ($post) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Cập nhật thành công',
-                'data' => $post
-            ], 200);
-        }
-        return response()->json([
-            'success' => false,
-            'message' => 'Không tìm thấy Post cần cập nhật'
-        ], 400);
+        $post = $this->postService->updatePost($request, $id);
+        return $post;
     }
 
     /**
@@ -236,17 +206,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = $this->postService->delete($id);
-        if ($post) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Xóa thành công',
-                'data' => $post,
-            ], 204);
-        }
-        return response()->json([
-            'success' => false,
-            'message' => ' Không tìm thấy Post để xóa',
-        ], 400);
+        $post = $this->postService->deletePost($id);
+
+        return $post;
     }
 }
