@@ -24,7 +24,7 @@ class CheckLoginMiddleware
     public function handle(Request $request, Closure $next)
     {
         $publicHelper = new PublicHelper();
-        $jwt = $request->bearerToken();
+        $jwt = $request->input('token');
 
         if (!$jwt) {
             return response()->json([
@@ -32,7 +32,6 @@ class CheckLoginMiddleware
                 'message' => 'Unauthorized'
             ], 401);
         }
-        $jwt = str_replace('Bearer ', '', $jwt);
         try {
             $decoded = $publicHelper->decodeJWT($jwt);
         } catch (Exception $e) {
@@ -41,6 +40,9 @@ class CheckLoginMiddleware
                 'message' => 'Không tìm thấy token'
             ], 401);
         }
+
+        // Pass user ID to controller
+        $request->attributes->add(['user_id' => $decoded->sub]);
         return $next($request);
     }
 }

@@ -26,16 +26,14 @@ class PublicHelper
             ], 401);
         }
 
-        return (array)$decoded;
+        return $decoded->data;
     }
-    public static function encodeJWT($data)
+    public static function encodeJWT($user)
     {
         $secretKey = config('jwt.key');
         $tokenId    = base64_encode(random_bytes(16));
         $payload = [
-            'access_token' => [
-                $data,
-            ],
+            'sub' => $user->id,
             'jti'  => $tokenId,
             'iat' => time(),
             'exp' => time() + (60 * 60 * 24 + 3000),
