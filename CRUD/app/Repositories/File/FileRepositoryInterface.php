@@ -6,4 +6,5 @@ use App\Repositories\RepositoriesInterface;
 
 interface FileRepositoryInterface extends RepositoriesInterface
 {
+    
 }

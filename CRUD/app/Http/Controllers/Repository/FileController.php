@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Repository;
 
+
+use App\Imports\FileImport;
 use Illuminate\Http\Request;
 use App\Http\Requests\FileRequest;
 use App\Http\Controllers\Controller;
-use App\Imports\FileImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Image;
+use Illuminate\Support\Facades\Storage;
 use App\Service\File\FileServiceInterface;
 
 class FileController extends Controller
@@ -44,37 +47,42 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        //$filename = 'data.csv';
-        //$filePath = public_path('excels/' . $filename);
-        //if (!file_exists($filePath)) {
-            //return response()->json(['message' => 'Không tìm thấy csv'], 404);
-       // }
-       // $fileImport = new FileImport();
-       // $data = Excel::import($fileImport, $filePath);
-       // return response()->json([
-           // 'success' => true,
-            //'message' => 'Thêm thành công',
-           // 'data' => $data,
-        //], 201);
-        
-        $url = 'https://cdn.topcv.vn/80/company_logos/cong-ty-tnhh-cybridge-a-chau-63f2df44341f3.jpg';
-        // Lấy nội dung tập tin từ URL
-        $fileContent = file_get_contents($url);
-        // Tạo tên tập tin mới
-        $fileName = basename($url);
-        // Lưu tập tin vào thư mục trên máy chủ
-        Storage::put('public/files/' . $fileName, $fileContent);
-        // Tạo bản ghi mới trong bảng File
-        $params = [
-            'image' => $fileName,
-            'user_id' => 1,
-        ];
-        $data = File::create($params);
-        return response()->json([
-            'success' => true,
-            'message' => 'Thêm mới thành công',
-            'data' => $data,
-        ], 201);
+        // Upload lên Laravel s3
+        // $filename = 'data.csv';
+        // $filePath = public_path('excels/' . $filename);
+        // if (!file_exists($filePath)) {
+        //     return response()->json(['message' => 'Không tìm thấy csv'], 404);
+        // }
+        // $data = Excel::import(new FileImport(), $filePath);
+
+        // // Upload file lên S3
+        // Storage::disk('s3')->put($filename, file_get_contents($filePath));
+
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Thêm thành công',
+        // ], 201);
+
+        // Upload lên Laravel s3 Resize ảnh
+        $data = $this->fileService->createFile();
+        return $data;
+
+        // Upload bằng đường dẫn trực tiếp
+        // $url = 'https://cdn.topcv.vn/80/company_logos/cong-ty-tnhh-cybridge-a-chau-63f2df44341f3.jpg';
+        // $fileContent = file_get_contents($url);
+        // $fileName = basename($url);
+        // $storage = Storage::disk('s3')->put('publics/' . $fileName, $fileContent);
+        // $params = [
+        // 'image' => $fileName,
+        // 'user_id' => 1,
+        // ];
+        // $data = $this->fileService->create($params);
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Thêm mới thành công',
+        //     'data' => $data,
+        // ], 201);
+
         // Cách upload API
         // if ($request->hasFile('image')) {
         //     $file = $request->file('image');
@@ -116,7 +124,7 @@ class FileController extends Controller
             'message' => 'Không tìm thấy File cần tìm'
         ], 400);
     }
-
+ 
     /**
      * Update the specified resource in storage.
      *

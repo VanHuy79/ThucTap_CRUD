@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
+use Firebase\JWT\JWT\TokenExpiredException;
+
 class Handler extends ExceptionHandler
 {
     /**

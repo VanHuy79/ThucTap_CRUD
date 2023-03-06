@@ -6,4 +6,5 @@ use App\Service\ServiceInterface;
 
 interface FileServiceInterface extends ServiceInterface
 {
+    public function createFile();
 }

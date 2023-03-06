@@ -87,6 +87,7 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $data = $this->postService->createPost($request);
+        // dd($data);
         return $data;
     }
 

@@ -2,9 +2,10 @@
 
 namespace App\Service\Post;
 
-use App\Repositories\Post\PostRepositoryInterface;
-
 use App\Service\BaseService;
+
+use Illuminate\Support\Facades\Auth;
+use App\Repositories\Post\PostRepositoryInterface;
 
 // Kế thừa các phương thức của Base
 class PostService extends BaseService implements PostServiceInterface
@@ -33,7 +34,7 @@ class PostService extends BaseService implements PostServiceInterface
          'name' => $request->name,
          'description' => $request->description,
          'field_image' => $request->field_image,
-         'user_id' => 1,
+         'user_id' => 22,
       ];
 
       $data = $this->repository->create($params);

@@ -12,4 +12,8 @@ class PostRepository extends BaseRepositories implements PostRepositoryInterface
    {
       return Post::class;
    }
+
+   public function getTest($request) {
+      
+   }
 }
