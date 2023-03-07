@@ -14,11 +14,6 @@ class PublicHelper
         $secretKey = config('jwt.key');
         try {
             $decoded = JWT::decode($jwt, new Key($secretKey, 'HS256'));
-        } catch (ExpiredException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Token này đã hết hạn',
-            ], 401);
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
@@ -26,7 +21,7 @@ class PublicHelper
             ], 401);
         }
 
-        return $decoded->data;
+        return $decoded;
     }
     public static function encodeJWT($user)
     {
@@ -36,7 +31,7 @@ class PublicHelper
             'sub' => $user->id,
             'jti'  => $tokenId,
             'iat' => time(),
-            'exp' => time() + (60 * 60 * 24 + 3000),
+            'exp' => time() + (60 * 60 * 24),
             'token_type' => 'bearer',
         ];
         // dd($payload);

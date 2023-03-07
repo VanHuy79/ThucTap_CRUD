@@ -24,14 +24,13 @@ class LoginController extends Controller
             $publicHelper = new PublicHelper;
             $token = $publicHelper->encodeJWT($user);
 
+            $user->token = $token;
+            $user->save();
+            
             return response()->json([
                 'success' => true,
                 'message' => 'Đăng nhập thành công',
                 'data' => [
-                    'user' => [
-                        'name' => $user->name,
-                        'email' => $user->email,
-                    ],
                     'token' => $token,
                 ],
             ], 200);
@@ -40,7 +39,6 @@ class LoginController extends Controller
             'success' => false,
             'message' => 'Email hoặc Password sai',
         ], 400);
-        
     }
 
     public function register(Request $request)

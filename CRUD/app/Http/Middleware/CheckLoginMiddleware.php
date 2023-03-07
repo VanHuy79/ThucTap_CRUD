@@ -24,7 +24,7 @@ class CheckLoginMiddleware
     public function handle(Request $request, Closure $next)
     {
         $publicHelper = new PublicHelper();
-        $jwt = $request->input('token');
+        $jwt = $request->$request->header('Authorization');
 
         if (!$jwt) {
             return response()->json([
@@ -32,6 +32,8 @@ class CheckLoginMiddleware
                 'message' => 'Unauthorized'
             ], 401);
         }
+
+        $jwt = str_replace('Bearer ', '', $jwt);
         try {
             $decoded = $publicHelper->decodeJWT($jwt);
         } catch (Exception $e) {
@@ -40,9 +42,11 @@ class CheckLoginMiddleware
                 'message' => 'Không tìm thấy token'
             ], 401);
         }
-
-        // Pass user ID to controller
-        $request->attributes->add(['user_id' => $decoded->sub]);
+        if ($decoded->exp <= now()) {
+            return response()->json([
+                'message' => 'Token này đã quá hạn',
+            ], 401);
+        }
         return $next($request);
     }
 }
