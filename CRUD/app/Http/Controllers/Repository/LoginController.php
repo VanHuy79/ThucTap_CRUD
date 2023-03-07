@@ -25,6 +25,7 @@ class LoginController extends Controller
             $token = $publicHelper->encodeJWT($user);
 
             $user->token = $token;
+            $user->device = md5($_SERVER['HTTP_USER_AGENT']);
             $user->save();
             
             return response()->json([

@@ -32,9 +32,8 @@ class PublicHelper
             'jti'  => $tokenId,
             'iat' => time(),
             'exp' => time() + (60 * 60 * 24),
-            'token_type' => 'bearer',
+            'device' => md5($_SERVER['HTTP_USER_AGENT']),
         ];
-        // dd($payload);
 
         $token = JWT::encode($payload, $secretKey, 'HS256');
         return $token;
