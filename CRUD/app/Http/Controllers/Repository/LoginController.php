@@ -25,8 +25,6 @@ class LoginController extends Controller
             $publicHelper = new PublicHelper;
             $token = $publicHelper->encodeJWT($user);
 
-            // Token::where('user_id', $user->id)->delete();
-
             Token::create([
                 'user_id' => $user->id,
                 'token' => $token

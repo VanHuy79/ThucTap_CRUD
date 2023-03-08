@@ -4,15 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Exception;
-use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Token;
-use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use App\Helpers\PublicHelper;
-use Illuminate\Http\Response;
 use Firebase\JWT\ExpiredException;
-use Illuminate\Auth\AuthenticationException;
 
 class CheckLoginMiddleware
 {
@@ -38,7 +33,7 @@ class CheckLoginMiddleware
         $jwt = str_replace('Bearer ', '', $jwt);
         try {
             $decoded = $publicHelper->decodeJWT($jwt);
-        }catch (ExpiredException $e) {
+        }catch (ExpiredException $ex) {
             return response()->json([
                 'success' => false,
                 'message' => 'Token này đã hết hạn'
@@ -49,14 +44,11 @@ class CheckLoginMiddleware
                 'message' => 'Không tìm thấy token'
             ], 401);
         }
-        
+
         $user_id = $decoded->sub;
         // Lấy user_id từ Token
         $tokens = Token::where('user_id', $user_id)->get();
-        // dd($tokens[0]->token);
-        // dd($jwt);
-
-        // Check số lượng token khác 1 khác cái số lượng
+        // Check token đầu tiên # với token truyền vào qua header thì hiện thị thông báo
         if ($tokens[0]->token != $jwt) {
             return response()->json([
                 'success' => false,

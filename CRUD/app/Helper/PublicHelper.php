@@ -20,7 +20,6 @@ class PublicHelper
                 'message' => $e->getMessage()
             ], 401);
         }
-
         return $decoded;
     }
     public static function encodeJWT($user)
@@ -33,7 +32,7 @@ class PublicHelper
             'iat' => time(),
             'exp' => time() + (60 * 60 * 24),
         ];
-
+        // dd($payload);
         $token = JWT::encode($payload, $secretKey, 'HS256');
         return $token;
     }
