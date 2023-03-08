@@ -30,10 +30,8 @@ class LoginController extends Controller
                 'user_id' => $user->id,
                 'token' => $token
             ]);
+            
             RedisHelper::setRedis($user->id, $token);
-            // $redis = Redis::connection();
-            // Lưu id và token vào redis
-            // $redis->set($user->id, $token);
 
             return response()->json([
                 'success' => true,

@@ -50,16 +50,13 @@ class CheckLoginMiddleware
 
         $user_id = $decoded->sub;
 
-        // $redis = Redis::connection();
-        // Lấy token ra
         $redisToken = RedisHelper::getRedis($user_id);
-        // dd($redisToken);
 
         if ($redisToken != $jwt) {
             return response()->json([
                 'success' => false,
                 'message' => 'Token này đã được đăng nhập trên thiết bị khác'
-            ], 401);
+            ], 400);
         }
         return $next($request);
     }
