@@ -28,11 +28,10 @@ class PublicHelper
         $secretKey = config('jwt.key');
         $tokenId    = base64_encode(random_bytes(16));
         $payload = [
-            'sub' => $user->id,
+            'sub' => $user->id, // id của user
             'jti'  => $tokenId,
             'iat' => time(),
             'exp' => time() + (60 * 60 * 24),
-            'device' => md5($_SERVER['HTTP_USER_AGENT']),
         ];
 
         $token = JWT::encode($payload, $secretKey, 'HS256');

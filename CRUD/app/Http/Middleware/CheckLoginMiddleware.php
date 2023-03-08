@@ -6,6 +6,7 @@ use Closure;
 use Exception;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Token;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use App\Helpers\PublicHelper;
@@ -37,30 +38,32 @@ class CheckLoginMiddleware
         $jwt = str_replace('Bearer ', '', $jwt);
         try {
             $decoded = $publicHelper->decodeJWT($jwt);
-            // dd($decoded);
+        }catch (ExpiredException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Token này đã hết hạn'
+            ], 401);
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Không tìm thấy token'
             ], 401);
         }
-        // if ($decoded->exp <= now()) {
-        //     return response()->json([
-        //         'message' => 'Token này đã quá hạn',
-        //     ], 401);
-        // }
+        
+        $user_id = $decoded->sub;
+        // Lấy user_id từ Token
+        $tokens = Token::where('user_id', $user_id)->get();
+        // dd($tokens[0]->token);
+        // dd($jwt);
 
-        $user = User::find($decoded->sub);
-
-        if ($user->device != md5($_SERVER['HTTP_USER_AGENT'])) {
+        // Check số lượng token khác 1 khác cái số lượng
+        if ($tokens[0]->token != $jwt) {
             return response()->json([
-                'message' => 'Token này đã có trên thiết bị khác'
+                'success' => false,
+                'message' => 'Token này đã được đăng nhập trên thiết bị khác'
             ], 401);
         }
+
         return $next($request);
-
-        // dd($user);
-
-
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Repository;
 
 use App\Models\User;
+use App\Models\Token;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use App\Helpers\PublicHelper;
@@ -24,10 +25,13 @@ class LoginController extends Controller
             $publicHelper = new PublicHelper;
             $token = $publicHelper->encodeJWT($user);
 
-            $user->token = $token;
-            $user->device = md5($_SERVER['HTTP_USER_AGENT']);
-            $user->save();
-            
+            // Token::where('user_id', $user->id)->delete();
+
+            Token::create([
+                'user_id' => $user->id,
+                'token' => $token
+            ]);
+
             return response()->json([
                 'success' => true,
                 'message' => 'Đăng nhập thành công',

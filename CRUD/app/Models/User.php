@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Post;
+use TheSeer\Tokenizer\Token;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,5 +48,10 @@ class User extends Authenticatable
     public function image()
     {
         return $this->hasMany(File::class);
+    }
+
+    public function token()
+    {
+        return $this->hasMany(Token::class);
     }
 }
