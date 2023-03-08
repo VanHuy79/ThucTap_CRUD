@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Repository;
 
 use App\Models\User;
 use App\Models\Token;
-use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use App\Helpers\PublicHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
+use App\Helper\Redis\RedisHelper;
 
 class LoginController extends Controller
 {
@@ -29,6 +30,10 @@ class LoginController extends Controller
                 'user_id' => $user->id,
                 'token' => $token
             ]);
+            RedisHelper::setRedis($user->id, $token);
+            // $redis = Redis::connection();
+            // Lưu id và token vào redis
+            // $redis->set($user->id, $token);
 
             return response()->json([
                 'success' => true,

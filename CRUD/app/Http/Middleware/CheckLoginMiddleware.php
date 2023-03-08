@@ -8,6 +8,8 @@ use App\Models\Token;
 use Illuminate\Http\Request;
 use App\Helpers\PublicHelper;
 use Firebase\JWT\ExpiredException;
+use Illuminate\Support\Facades\Redis;
+use App\Helper\Redis\RedisHelper;
 
 class CheckLoginMiddleware
 {
@@ -20,6 +22,7 @@ class CheckLoginMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        $redis = Redis::connection();
         $publicHelper = new PublicHelper();
         $jwt = $request->header('Authorization');
 
@@ -27,35 +30,37 @@ class CheckLoginMiddleware
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized'
-            ], 401);
+            ], 400);
         }
 
         $jwt = str_replace('Bearer ', '', $jwt);
         try {
             $decoded = $publicHelper->decodeJWT($jwt);
-        }catch (ExpiredException $ex) {
+        } catch (ExpiredException $ex) {
             return response()->json([
                 'success' => false,
                 'message' => 'Token này đã hết hạn'
-            ], 401);
+            ], 400);
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Không tìm thấy token'
-            ], 401);
+            ], 400);
         }
 
         $user_id = $decoded->sub;
-        // Lấy user_id từ Token
-        $tokens = Token::where('user_id', $user_id)->get();
-        // Check token đầu tiên # với token truyền vào qua header thì hiện thị thông báo
-        if ($tokens[0]->token != $jwt) {
+
+        // $redis = Redis::connection();
+        // Lấy token ra
+        $redisToken = RedisHelper::getRedis($user_id);
+        // dd($redisToken);
+
+        if ($redisToken != $jwt) {
             return response()->json([
                 'success' => false,
                 'message' => 'Token này đã được đăng nhập trên thiết bị khác'
             ], 401);
         }
-
         return $next($request);
     }
 }

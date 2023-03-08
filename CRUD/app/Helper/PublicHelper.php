@@ -18,7 +18,7 @@ class PublicHelper
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage()
-            ], 401);
+            ], 400);
         }
         return $decoded;
     }
